@@ -29,9 +29,9 @@ export class ReservationService {
   }
 
   deleteReservation(id: string): void {
-    this.reservations = this.reservations.filter(reservation => reservation.id !== id);
+    const index = this.reservations.findIndex(r => r.id === id);
+    this.reservations.splice(index, 1);
     localStorage.setItem('reservations', JSON.stringify(this.reservations));
-
   }
 
   updateReservation(updatedReservation: Reservation): void {

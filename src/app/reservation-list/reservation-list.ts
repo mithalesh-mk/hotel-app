@@ -21,5 +21,9 @@ export class ReservationList implements OnInit {
     this.reservations = this.reservationService.getReservations();
   }
 
+  deleteReservation(index: string): void {
+    this.reservationService.deleteReservation(index);
+  }
+
 
 }
