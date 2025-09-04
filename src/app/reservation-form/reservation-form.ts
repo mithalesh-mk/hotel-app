@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReservationService } from '../reservation/reservationservice';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,7 +18,8 @@ export class ReservationForm implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private reservationService: ReservationService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
     ) {
   }
 
@@ -29,9 +30,17 @@ export class ReservationForm implements OnInit {
         guestName: ['', Validators.required],
         guestEmail: ['', [Validators.required, Validators.email]],
         roomNumber: ['', [Validators.required, Validators.min(1)]],
-        id: ['', Validators.required]
+        id: Math.random().toString(36).substring(2, 9)
 
       })
+      let id = this.activatedRoute.snapshot.paramMap.get('id');
+      
+      if(id) {
+        const reservation = this.reservationService.getReservationById(id);
+        if(reservation) {
+          this.reservationForm.patchValue(reservation);
+        }
+      }
   }
 
   reservationForm: FormGroup = new FormGroup({});
@@ -40,8 +49,15 @@ export class ReservationForm implements OnInit {
     if(this.reservationForm.valid) {
       //console.log(this.reservationForm.value);
       const newReservation: Reservation  = this.reservationForm.value;
-      this.reservationService.addReservation(newReservation);
-      this.reservationForm.reset();
+      let id = this.activatedRoute.snapshot.paramMap.get('id');
+
+      if(id) {
+        this.reservationService.updateReservation(this.reservationForm.value);
+        this.router.navigate(['/reservation']);
+      }else {
+        this.reservationService.addReservation(newReservation);
+        this.reservationForm.reset();
+      }
       this.router.navigate(['/reservation']);
     }
     
