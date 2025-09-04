@@ -5,11 +5,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReservationService } from '../reservation/reservationservice';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Home } from "../home/home";
 
 
 @Component({
   selector: 'app-reservation-form',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, Home],
   templateUrl: './reservation-form.html',
   styleUrl: './reservation-form.css'
 })
