@@ -47,7 +47,6 @@ export class ReservationForm implements OnInit {
 
   onSubmit() {
     if(this.reservationForm.valid) {
-      //console.log(this.reservationForm.value);
       const newReservation: Reservation  = this.reservationForm.value;
       let id = this.activatedRoute.snapshot.paramMap.get('id');
 
