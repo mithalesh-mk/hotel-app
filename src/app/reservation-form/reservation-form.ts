@@ -39,6 +39,7 @@ export class ReservationForm implements OnInit {
       //console.log(this.reservationForm.value);
       const newReservation: Reservation  = this.reservationForm.value;
       this.reservationService.addReservation(newReservation);
+      this.reservationForm.reset();
     }
     
   }
