@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReservationService } from '../reservation/reservationservice';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class ReservationForm implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private router: Router
     ) {
   }
 
@@ -40,6 +42,7 @@ export class ReservationForm implements OnInit {
       const newReservation: Reservation  = this.reservationForm.value;
       this.reservationService.addReservation(newReservation);
       this.reservationForm.reset();
+      this.router.navigate(['/reservation']);
     }
     
   }
